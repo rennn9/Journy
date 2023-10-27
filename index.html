@@ -12,13 +12,17 @@
             <img src="/img/Journy-logo.png" alt="Journy Logo">
         </div>
     </header>
-    <div class="entry-container">
-        <textarea id="entry" placeholder="Tulis di sini..."></textarea>
-        <button id="save-entry">Simpan</button>
-    </div>
+    <button id="add-entry-button">Tambah Entri</button>
     <div class="entries">
         <!-- Daftar entri diary akan muncul di sini -->
     </div>
+    <div class="popup" id="entry-popup">
+        <div class="popup-content">
+            <span class="close" id="close-popup">&times;</span>
+            <textarea id="entry" placeholder="Tulis di sini..."></textarea>
+            <button id="save-entry">Simpan</button>
+        </div>
+    </div>    
     <script src="script.js"></script>
 </body>
 </html>
