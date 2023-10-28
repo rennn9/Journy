@@ -1,4 +1,129 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const daysTag = document.querySelector(".days");
+    const currentDate = document.querySelector(".current-date");
+    const prevNextIcon = document.querySelectorAll(".icons span");
+    const diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+    
+    let date = new Date();
+    let currYear = date.getFullYear();
+    let currMonth = date.getMonth();
+    
+    const todayButton = document.getElementById("today-button");
+    
+    todayButton.addEventListener("click", () => {
+      date = new Date();
+      currYear = date.getFullYear();
+      currMonth = date.getMonth();
+      monthDropdown.value = currMonth;
+      yearDropdown.value = currYear;
+      renderCalendar();
+    });
+    
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    const renderCalendar = () => {
+        let firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
+        let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate();
+        let lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay();
+        let lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
+        let liTag = "";
+    
+        for (let i = firstDayofMonth; i > 0; i--) {
+            liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+        }
+    
+        for (let i = 1; i <= lastDateofMonth; i++) {
+            let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
+            // liTag += `<li class="${isToday}">${i}</li>`;
+
+            const matchingEntries = diaryEntries.filter(entry => {
+                const entryDate = new Date(entry.timestamp);
+                return entryDate.getDate() === i && entryDate.getMonth() === currMonth && entryDate.getFullYear() === currYear;
+            });
+        
+            if (matchingEntries.length > 0) {
+                // Jika ada entri, tambahkan kelas CSS khusus ke tanggal
+                liTag += `<li class="${isToday} highlighted">${i}</li>`;
+            } else {
+                liTag += `<li class="${isToday}">${i}</li>`;
+            }
+        }
+    
+        for (let i = lastDayofMonth; i < 6; i++) {
+            liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
+        }
+    
+        // currentDate.innerText = `${months[currMonth]} ${currYear}`;
+        daysTag.innerHTML = liTag;
+    }
+
+    renderCalendar();
+    
+    prevNextIcon.forEach(icon => {
+        icon.addEventListener("click", () => {
+            currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+    
+            if (currMonth < 0 || currMonth > 11) {
+                date = new Date(currYear, currMonth, new Date().getDate());
+                currYear = date.getFullYear();
+                currMonth = date.getMonth();
+            } else {
+                date = new Date();
+            }
+    
+            monthDropdown.value = currMonth;
+            yearDropdown.value = currYear;
+    
+            renderCalendar();
+        });
+    });
+    
+    const monthDropdown = document.getElementById("month-dropdown");
+    const yearDropdown = document.getElementById("year-dropdown");
+    const currentDateText = document.getElementById("current-date");
+    const monthYearDropdowns = document.getElementById("month-year-dropdowns");
+    
+    const fillMonthYearDropdowns = () => {
+      for (let i = 0; i < months.length; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.text = months[i];
+        monthDropdown.appendChild(option);
+      }
+    
+      const currentYear = new Date().getFullYear();
+      for (let i = currentYear - 100; i <= currentYear + 100; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        yearDropdown.appendChild(option);
+      }
+    
+      monthDropdown.value = currMonth;
+      yearDropdown.value = currYear;
+    };
+    
+    fillMonthYearDropdowns();
+    
+    monthYearDropdowns.addEventListener("change", () => {
+      currMonth = parseInt(monthDropdown.value);
+      currYear = parseInt(yearDropdown.value);
+      renderCalendar();
+    });
+    
+    currentDateText.addEventListener("click", () => {
+      monthYearDropdowns.classList.toggle("show-dropdowns");
+    });
+    
+    document.addEventListener("click", (event) => {
+      if (!monthYearDropdowns.contains(event.target)) {
+        monthYearDropdowns.classList.remove("show-dropdowns");
+      }
+    });
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function () {
     const entryTextarea = document.getElementById('entry');
     const saveButton = document.getElementById('save-entry');
     const entriesDiv = document.querySelector('.entries');
