@@ -22,6 +22,14 @@
     
             const timeDiv = document.createElement('div');
             timeDiv.className = 'time';
+
+            // const moodDiv = document.createElement('div');
+            // moodDiv.className = 'mood';
+            // moodDiv.textContent = 'Mood: ' + entry.mood;
+
+            const moodImage = document.createElement('img');
+            moodImage.className = 'entry-mood-image';
+            moodImage.src = `/img/mood${entry.mood}.webp`; 
     
             const date = new Date(entry.timestamp);
             const options = {
@@ -57,7 +65,9 @@
             timestampDiv.appendChild(timeDiv);
     
             entryDiv.appendChild(timestampDiv);
+            entryDiv.appendChild(moodImage);
             entryDiv.appendChild(textDiv);
+            // entryDiv.appendChild(moodDiv);
             entryDiv.appendChild(deleteButton);
     
             entriesDiv.appendChild(entryDiv);
@@ -177,6 +187,44 @@
         entryPopup.style.display = 'none';
     });
 
+    // const moodImages = document.querySelectorAll('.mood-image');
+
+    // moodImages.forEach((image) => {
+    // image.addEventListener('click', function () {
+    //     // Hilangkan kelas grayscale
+    //     moodImages.forEach((img) => {
+    //         img.classList.add('grayscale');
+    //         img.classList.remove('colorful');
+    //       });
+        
+    //     this.classList.remove('grayscale');
+    //     this.classList.add('colorful');
+
+    //     const selectedMood = this.getAttribute('data-mood');
+    //     console.log('Mood yang dipilih:', selectedMood);
+    // });
+    // });
+
+    const moodImages = document.querySelectorAll('.mood-image');
+    let selectedMood = null; // Variabel untuk menyimpan mood yang dipilih
+
+    moodImages.forEach((image) => {
+    image.addEventListener('click', function () {
+
+        moodImages.forEach((img) => {
+        img.classList.add('grayscale');
+        img.classList.remove('colorful');
+        });
+
+        this.classList.remove('grayscale');
+        this.classList.add('colorful');
+
+        selectedMood = this.getAttribute('data-mood');
+        console.log('Mood yang dipilih:', selectedMood);
+    });
+    });
+
+
     // saveButton.addEventListener('click', function () {
     //     const newEntry = entryTextarea.value.replace(/\n/g, '|||');
     //     if (newEntry) {
@@ -190,16 +238,42 @@
     //     }
     // });
    
+    // saveButton.addEventListener('click', function () {
+    //     const newEntry = entryTextarea.value.replace(/\n/g, '|||');
+    //     if (newEntry) {
+    //         const timestamp = new Date().toLocaleString();
+    //         entries.unshift({ text: newEntry, timestamp: timestamp });
+    //         localStorage.setItem('diaryEntries', JSON.stringify(entries));
+    //         entryTextarea.value = '';
+    //         console.log('Entri disimpan:', newEntry);
+    //         renderEntries();
+    //         // renderCalendar();
+    
+    //         const currentDate = new Date();
+    //         const dayOfMonth = currentDate.getDate();
+    //         const dateElements = document.querySelectorAll('.calendar .days li');
+    
+    //         dateElements.forEach(element => {
+    //             if (element.innerText === dayOfMonth.toString()) {
+    //                 element.classList.add('highlighted');
+    //             }
+    //         });
+            
+    //     }
+    // });
+
     saveButton.addEventListener('click', function () {
         const newEntry = entryTextarea.value.replace(/\n/g, '|||');
         if (newEntry) {
             const timestamp = new Date().toLocaleString();
-            entries.unshift({ text: newEntry, timestamp: timestamp });
+            const mood = selectedMood;
+            selectedMood = null;
+    
+            entries.unshift({ text: newEntry, timestamp: timestamp, mood: mood }); // Simpan mood bersama dengan entri
             localStorage.setItem('diaryEntries', JSON.stringify(entries));
             entryTextarea.value = '';
             console.log('Entri disimpan:', newEntry);
             renderEntries();
-            // renderCalendar();
     
             const currentDate = new Date();
             const dayOfMonth = currentDate.getDate();
@@ -210,12 +284,12 @@
                     element.classList.add('highlighted');
                 }
             });
-            
         }
     });
-
+    
     renderEntries();
 
+    // calendar script
     const daysTag = document.querySelector(".days");
     const currentDate = document.querySelector(".current-date");
     const prevNextIcon = document.querySelectorAll(".icons span");

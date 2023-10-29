@@ -41,14 +41,14 @@ header {
     text-align: center;
 }
 
-textarea {
+/* textarea {
     display: flexbox; 
     width: 750px;
     height: 750px;
     border: 1px solid #ccc;
     padding: 10px;
     font-size: 16px;
-}
+} */
 
 button {
     display: block;
@@ -73,6 +73,7 @@ button {
     border: 1px solid #ccc;
     word-wrap: break-word;
     white-space: normal;
+    /* display: flex; */
 }
 
 .timestamp {
@@ -105,8 +106,14 @@ button {
 textarea {
     display: flex;
     resize: none;
-    height: 600px;
-    width: 500px;
+    height: 400px;
+    width: 300px;
+    /* display: flexbox;  */
+    /* width: 750px;
+    height: 750px; */
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
   }
   
 
@@ -358,4 +365,24 @@ delete-button {
     margin-top: -30px; 
   }
   
-  
+  /* mood selector style */
+  .mood-image {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: filter 0.3s;
+  }
+
+  .grayscale {
+    filter: grayscale(100%);
+  }
+
+  .colorful {
+    filter: grayscale(0%);
+  }
+
+  .entry-mood-image{
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
