@@ -49,17 +49,24 @@
             timeDiv.textContent = formattedTime;
     
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Hapus';
+            deleteButton.className = 'delete-button';
+            // deleteButton.textContent = 'Hapus';
+            deleteButton.innerHTML = '<span class="material-symbols-outlined">delete</span>';
             deleteButton.addEventListener('click', function () {
                 deleteEntry(index);
             });
     
-            // const textDiv = document.createElement('div');
-            // textDiv.textContent = entry.text;
+            const maxWords = 15;
+            const words = entry.text.split(' ');
+            const truncatedText = words.slice(0, maxWords).join(' ');
 
-            const textWithLineBreaks = entry.text.replace(/\|\|\|/g, "<br>");
             const textDiv = document.createElement('div');
-            textDiv.innerHTML = textWithLineBreaks;
+            textDiv.className = 'entry-text';
+
+            const isTruncated = words.length > maxWords;
+            const displayText = isTruncated ? truncatedText + '...' : entry.text;
+
+            textDiv.innerHTML = displayText.replace(/\|\|\|/g, "<br>");
 
             timestampDiv.appendChild(dateDiv);
             timestampDiv.appendChild(timeDiv);
@@ -206,7 +213,7 @@
     // });
 
     const moodImages = document.querySelectorAll('.mood-image');
-    let selectedMood = null; // Variabel untuk menyimpan mood yang dipilih
+    let selectedMood = null;
 
     moodImages.forEach((image) => {
     image.addEventListener('click', function () {
@@ -269,7 +276,7 @@
             const mood = selectedMood;
             selectedMood = null;
     
-            entries.unshift({ text: newEntry, timestamp: timestamp, mood: mood }); // Simpan mood bersama dengan entri
+            entries.unshift({ text: newEntry, timestamp: timestamp, mood: mood });
             localStorage.setItem('diaryEntries', JSON.stringify(entries));
             entryTextarea.value = '';
             console.log('Entri disimpan:', newEntry);
