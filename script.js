@@ -29,7 +29,7 @@
 
             const moodImage = document.createElement('img');
             moodImage.className = 'entry-mood-image';
-            moodImage.src = `/img/mood${entry.mood}.webp`; 
+            moodImage.src = `/img/mood${entry.mood}.png`; 
     
             const date = new Date(entry.timestamp);
             const options = {
@@ -79,7 +79,8 @@
     
             entriesDiv.appendChild(entryDiv);
         });
-    }
+    }  
+
     
     function deleteEntry(index) {
         console.log("Deleting entry at index: " + index);
@@ -190,9 +191,24 @@
         entryPopup.style.display = 'block';
     });
 
+    // closePopup.addEventListener('click', function () {
+    //     entryTextarea.value = '';
+    //     entryPopup.style.display = 'none';
+    // });
+
     closePopup.addEventListener('click', function () {
+        entryTextarea.value = '';
         entryPopup.style.display = 'none';
+        // Hapus mood yang dipilih
+        if (selectedMood) {
+            moodImages.forEach((img) => {
+                img.classList.add('grayscale');
+                img.classList.remove('colorful');
+                selectedMood = null;
+            });
+        }
     });
+    
 
     // const moodImages = document.querySelectorAll('.mood-image');
 
@@ -275,6 +291,10 @@
             const timestamp = new Date().toLocaleString();
             const mood = selectedMood;
             selectedMood = null;
+            moodImages.forEach((img) => {
+                img.classList.add('grayscale');
+                img.classList.remove('colorful');
+            });
     
             entries.unshift({ text: newEntry, timestamp: timestamp, mood: mood });
             localStorage.setItem('diaryEntries', JSON.stringify(entries));
@@ -292,6 +312,7 @@
                 }
             });
         }
+        entryPopup.style.display = 'none';
     });
     
     renderEntries();
@@ -301,7 +322,7 @@
     const currentDate = document.querySelector(".current-date");
     const prevNextIcon = document.querySelectorAll(".icons span");
     const diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
-    
+
     let date = new Date();
     let currYear = date.getFullYear();
     let currMonth = date.getMonth();
@@ -417,5 +438,5 @@
       if (!monthYearDropdowns.contains(event.target)) {
         monthYearDropdowns.classList.remove("show-dropdowns");
       }
-    });
+    })
 });
