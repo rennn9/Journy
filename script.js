@@ -29,7 +29,7 @@
 
             const moodImage = document.createElement('img');
             moodImage.className = 'entry-mood-image';
-            moodImage.src = `/img/mood${entry.mood}.png`; 
+            moodImage.src = `img/mood${entry.mood}.webp`; 
     
             const date = new Date(entry.timestamp);
             const options = {
@@ -199,7 +199,7 @@
     closePopup.addEventListener('click', function () {
         entryTextarea.value = '';
         entryPopup.style.display = 'none';
-        // Hapus mood yang dipilih
+
         if (selectedMood) {
             moodImages.forEach((img) => {
                 img.classList.add('grayscale');
@@ -214,7 +214,7 @@
 
     // moodImages.forEach((image) => {
     // image.addEventListener('click', function () {
-    //     // Hilangkan kelas grayscale
+
     //     moodImages.forEach((img) => {
     //         img.classList.add('grayscale');
     //         img.classList.remove('colorful');
