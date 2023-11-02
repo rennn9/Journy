@@ -198,9 +198,7 @@ header {
     display: flex;
     flex-direction: column;
     margin: 50px 0px 25px 0px;
-    /* background-color: white; */
     padding: 0px;
-    /* border: 1px solid #ccc; */
 }
 
 .entry-box {
@@ -241,7 +239,6 @@ header {
 }
 
 .entry-mood-image{
-  /* display: block; */
   width: 40px;
   height: 40px;
   margin-bottom: 5px;
@@ -387,7 +384,6 @@ header {
     top: 0;
     z-index: 1;
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
 }
 
@@ -442,16 +438,6 @@ header {
   }
 
   .popup-header {
-    /* background-color: #283845 ;
-    color: #F2D593 ;
-    height: 35px;
-    padding: 20px;
-    border-radius: 8px 8px 0px 0px;
-    position: sticky;
-    top: 0;
-    z-index: 1; */
-    /* display: flex; */
-    /* justify-content: space-between; */
     flex-direction: column;
     align-items: start;
   }
@@ -460,11 +446,6 @@ header {
     margin-top: 5px;
     margin-left: 0px;
     padding: 0px;
-    /* background: transparent;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 14px; */
   }
 
 }

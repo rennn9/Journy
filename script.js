@@ -23,10 +23,6 @@
             const timeDiv = document.createElement('div');
             timeDiv.className = 'time';
 
-            // const moodDiv = document.createElement('div');
-            // moodDiv.className = 'mood';
-            // moodDiv.textContent = 'Mood: ' + entry.mood;
-
             const moodImage = document.createElement('img');
             moodImage.className = 'entry-mood-image';
             moodImage.src = `img/mood${entry.mood}.webp`; 
@@ -74,7 +70,6 @@
             entryDiv.appendChild(timestampDiv);
             entryDiv.appendChild(moodImage);
             entryDiv.appendChild(textDiv);
-            // entryDiv.appendChild(moodDiv);
             entryDiv.appendChild(deleteButton);
     
             entriesDiv.appendChild(entryDiv);
@@ -191,11 +186,6 @@
         entryPopup.style.display = 'block';
     });
 
-    // closePopup.addEventListener('click', function () {
-    //     entryTextarea.value = '';
-    //     entryPopup.style.display = 'none';
-    // });
-
     closePopup.addEventListener('click', function () {
         entryTextarea.value = '';
         entryPopup.style.display = 'none';
@@ -209,25 +199,6 @@
         }
     });
     
-
-    // const moodImages = document.querySelectorAll('.mood-image');
-
-    // moodImages.forEach((image) => {
-    // image.addEventListener('click', function () {
-
-    //     moodImages.forEach((img) => {
-    //         img.classList.add('grayscale');
-    //         img.classList.remove('colorful');
-    //       });
-        
-    //     this.classList.remove('grayscale');
-    //     this.classList.add('colorful');
-
-    //     const selectedMood = this.getAttribute('data-mood');
-    //     console.log('Mood yang dipilih:', selectedMood);
-    // });
-    // });
-
     const moodImages = document.querySelectorAll('.mood-image');
     let selectedMood = null;
 
@@ -246,44 +217,6 @@
         console.log('Mood yang dipilih:', selectedMood);
     });
     });
-
-
-    // saveButton.addEventListener('click', function () {
-    //     const newEntry = entryTextarea.value.replace(/\n/g, '|||');
-    //     if (newEntry) {
-    //         const timestamp = new Date().toLocaleString();
-    //         entries.unshift({ text: newEntry, timestamp: timestamp });
-    //         localStorage.setItem('diaryEntries', JSON.stringify(entries));
-    //         entryTextarea.value = '';
-    //         renderCalendar();
-    //         renderEntries();
-    //         console.log('Entri disimpan:', newEntry);
-    //     }
-    // });
-   
-    // saveButton.addEventListener('click', function () {
-    //     const newEntry = entryTextarea.value.replace(/\n/g, '|||');
-    //     if (newEntry) {
-    //         const timestamp = new Date().toLocaleString();
-    //         entries.unshift({ text: newEntry, timestamp: timestamp });
-    //         localStorage.setItem('diaryEntries', JSON.stringify(entries));
-    //         entryTextarea.value = '';
-    //         console.log('Entri disimpan:', newEntry);
-    //         renderEntries();
-    //         // renderCalendar();
-    
-    //         const currentDate = new Date();
-    //         const dayOfMonth = currentDate.getDate();
-    //         const dateElements = document.querySelectorAll('.calendar .days li');
-    
-    //         dateElements.forEach(element => {
-    //             if (element.innerText === dayOfMonth.toString()) {
-    //                 element.classList.add('highlighted');
-    //             }
-    //         });
-            
-    //     }
-    // });
 
     saveButton.addEventListener('click', function () {
         const newEntry = entryTextarea.value.replace(/\n/g, '|||');
@@ -354,7 +287,6 @@
     
         for (let i = 1; i <= lastDateofMonth; i++) {
             let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
-            // liTag += `<li class="${isToday}">${i}</li>`;
 
             const matchingEntries = diaryEntries.filter(entry => {
                 const entryDate = new Date(entry.timestamp);
@@ -372,7 +304,6 @@
             liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
         }
     
-        // currentDate.innerText = `${months[currMonth]} ${currYear}`;
         daysTag.innerHTML = liTag;
     }
 
